@@ -82,6 +82,8 @@ body {
     border: 4px solid var(--gold-dark);
     box-shadow: 0 0 20px rgba(212,175,55,0.5);
     margin-bottom: 30px;
+    transform: scale(1);
+    transition: transform 1.5s ease;
 }
 .story-text {
     font-size: clamp(1.1rem, 4vw, 1.5rem);
@@ -91,7 +93,6 @@ body {
 }
 .story-text strong {
     color: var(--gold-dark);
-    font-weight: 400;
 }
 .inspiration-text {
     font-family: var(--font-heading);
@@ -120,11 +121,36 @@ body {
     filter: blur(10px);
     transform: translateY(50px);
 }
+#music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: var(--gold-light);
+    font-family: var(--font-body);
+    cursor: pointer;
+    user-select: none;
+}
+.fade-out {
+    position: fixed;
+    top:0; left:0;
+    width: 100%; height: 100%;
+    background: black;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+}
 </style>
 </head>
 <body>
 
 <canvas id="particle-canvas"></canvas>
+
+<div id="music-control">🔊 Musik</div>
+<div class="fade-out" id="ending-fade"></div>
 
 <div class="story-container">
     <section class="story-section" id="intro">
@@ -138,7 +164,7 @@ body {
     <section class="story-section" id="thankyou">
         <div class="reveal">
             <img src="foto1.jpg" alt="Foto Sintiya tersenyum" class="profile-pic">
-            <p class="story-text">
+            <p class="story-text typewriter">
                 Hai Tya, aku membuat ini karena ada sesuatu yang ingin kusampaikan...
                 <br><br>
                 Terima kasih untuk semua obrolan, tawa, dan dukungan yang mungkin tidak kamu sadari sudah kamu berikan.
@@ -148,7 +174,7 @@ body {
 
     <section class="story-section" id="inspiration">
         <div class="reveal">
-            <p class="inspiration-text">
+            <p class="inspiration-text typewriter">
                 "Caramu melihat dunia dan menghadapi segalanya dengan positif... itu jujur memberiku banyak inspirasi."
             </p>
         </div>
@@ -156,43 +182,45 @@ body {
 
     <section class="story-section" id="outro">
         <div class="reveal">
-            <p class="outro-text">
+            <p class="outro-text typewriter">
                 Dan setelah semua itu, rasa terima kasih ini perlahan berubah menjadi... <em>rasa penasaran.</em>
             </p>
-            <p class="outro-text" style="font-size: 1rem; opacity: 0.8; margin-top: 20px;">
+            <p class="outro-text typewriter" style="font-size: 1rem; opacity: 0.8; margin-top: 20px;">
                 Tapi kita jalani santai saja, ya.
             </p>
-            <p class="final-signature">
+            <p class="final-signature typewriter">
                 Dari temanmu,<br>Chandra
             </p>
         </div>
     </section>
 </div>
 
+<!-- Audio -->
+<audio id="bg-music" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+</audio>
+
 <!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script>
-// ===== Background Particles with Gradient Gold =====
+// ===== Background Particles with Bokeh Gold =====
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particlesArray = [];
-
 class Particle {
     constructor(x, y, directionX, directionY, size) {
-        this.x = x;
-        this.y = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
+        this.x = x; this.y = y;
+        this.directionX = directionX; this.directionY = directionY;
         this.size = size;
     }
     draw() {
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size*3);
-        gradient.addColorStop(0, 'rgba(245, 217, 126, 0.9)');
+        gradient.addColorStop(0, 'rgba(245, 217, 126, 0.8)');
         gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
@@ -207,27 +235,24 @@ class Particle {
         this.draw();
     }
 }
-
 function init() {
     particlesArray = [];
-    let numberOfParticles = Math.min((canvas.height * canvas.width) / 9000, 150);
+    let numberOfParticles = Math.min((canvas.height * canvas.width) / 9000, 120);
     for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 0.5;
+        let size = (Math.random() * 3) + 1;
         let x = Math.random() * (innerWidth - size * 2);
         let y = Math.random() * (innerHeight - size * 2);
-        let directionX = (Math.random() * 0.4) - 0.2;
-        let directionY = (Math.random() * 0.4) - 0.2;
+        let directionX = (Math.random() * 0.3) - 0.15;
+        let directionY = (Math.random() * 0.3) - 0.15;
         particlesArray.push(new Particle(x, y, directionX, directionY, size));
     }
 }
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-    }
+    particlesArray.forEach(p => p.update());
 }
-window.addEventListener('resize', function() {
+window.addEventListener('resize', () => {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
     init();
@@ -235,25 +260,20 @@ window.addEventListener('resize', function() {
 init();
 animate();
 
-// ===== Text Animations =====
+// ===== GSAP Animations =====
 gsap.registerPlugin(ScrollTrigger);
 
-// Intro Animation
 gsap.timeline()
     .from('.intro-title', { duration: 1.2, y: 50, opacity: 0, ease: 'power3.out' })
     .from('.intro-subtitle', { duration: 1, y: 20, opacity: 0, ease: 'power2.out' }, '-=0.7')
     .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
 
-// Reveal Sections
 gsap.utils.toArray('.reveal').forEach((el) => {
     gsap.fromTo(el,
         { opacity: 0, y: 50, filter: 'blur(10px)' },
         {
-            opacity: 1,
-            y: 0,
-            filter: 'blur(0px)',
-            duration: 1.5,
-            ease: 'power3.out',
+            opacity: 1, y: 0, filter: 'blur(0px)',
+            duration: 1.5, ease: 'power3.out',
             scrollTrigger: {
                 trigger: el,
                 start: 'top 80%',
@@ -261,6 +281,64 @@ gsap.utils.toArray('.reveal').forEach((el) => {
             }
         }
     );
+});
+
+// ===== Typewriter Effect =====
+function typeWriterEffect(element) {
+    const text = element.innerHTML;
+    element.innerHTML = '';
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, 40);
+        }
+    }
+    typing();
+}
+document.querySelectorAll('.typewriter').forEach(el => {
+    ScrollTrigger.create({
+        trigger: el,
+        start: 'top 80%',
+        onEnter: () => typeWriterEffect(el)
+    });
+});
+
+// ===== Parallax Profile Picture =====
+window.addEventListener('scroll', () => {
+    document.querySelectorAll('.profile-pic').forEach(pic => {
+        let offset = window.scrollY / 10;
+        pic.style.transform = `scale(${1 + offset / 500})`;
+    });
+});
+
+// ===== Music Control =====
+const music = document.getElementById('bg-music');
+const control = document.getElementById('music-control');
+let isPlaying = false;
+
+control.addEventListener('click', () => {
+    if (isPlaying) {
+        music.pause();
+        control.textContent = '🔇 Musik Mati';
+    } else {
+        music.play();
+        control.textContent = '🔊 Musik';
+    }
+    isPlaying = !isPlaying;
+});
+
+// ===== Ending Fade Out =====
+ScrollTrigger.create({
+    trigger: '#outro',
+    start: 'bottom 80%',
+    onEnter: () => {
+        setTimeout(() => {
+            document.getElementById('ending-fade').style.transition = 'opacity 2s ease';
+            document.getElementById('ending-fade').style.opacity = '1';
+        }, 4000);
+    }
 });
 </script>
 </body>
