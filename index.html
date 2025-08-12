@@ -3,82 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terima Kasih, Tya</title>
+    <title>Terima Kasih, Sintiya</title>
+
     <style>
-    /* Mengatur dasar dari seluruh halaman */
-    body {
-        font-family: 'Georgia', serif; /* Jenis huruf yang elegan */
-        background-color: #fce4ec; /* Warna latar belakang pink lembut */
-        color: #444; /* Warna teks gelap agar mudah dibaca */
-        text-align: center; /* Membuat semua teks jadi rata tengah */
-        margin: 0;
-        padding: 20px;
-    }
+        body {
+            font-family: 'Georgia', serif; 
+            background-color: #fce4ec; 
+            color: #444; 
+            text-align: center; 
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #c2185b;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #c2185b;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        footer p {
+            font-size: 1em;
+            font-style: italic;
+            color: #777;
+            margin-top: 40px;
+        }
 
-    /* Membuat wadah utama untuk konten */
-    .container {
-        max-width: 800px; /* Lebar maksimal konten */
-        margin: 0 auto; /* Membuat wadah berada di tengah */
-        background-color: #ffffff; /* Latar belakang putih untuk kontainer */
-        padding: 30px;
-        border-radius: 15px; /* Membuat sudut menjadi tumpul/melengkung */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Memberi efek bayangan */
-    }
-
-    /* Mengatur gaya judul utama */
-    h1 {
-        color: #c2185b; /* Warna pink tua untuk judul */
-        font-size: 2.5em; /* Ukuran font (em adalah satuan relatif) */
-    }
-
-    /* Mengatur gaya gambar */
-    img {
-        max-width: 100%; /* Membuat gambar responsif, tidak akan lebih lebar dari wadahnya */
-        height: auto;
-        border-radius: 10px; /* Sudut gambar juga dibuat melengkung */
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    /* Mengatur gaya paragraf */
-    p {
-        font-size: 1.2em;
-        line-height: 1.6; /* Jarak antar baris agar nyaman dibaca */
-    }
-
-    /* Mengatur gaya penutup/footer */
-    footer p {
-        font-size: 1em;
-        font-style: italic; /* Membuat teks jadi miring */
-        color: #777; /* Warna abu-abu */
-        margin-top: 40px;
-    }
-</style>
+        /* -- Kode CSS untuk Animasi dan Tombol -- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .container {
+            animation: fadeIn 1s ease-out;
+        }
+        h1, h2, p, img, footer {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        h1 { animation-delay: 0.2s; }
+        img { animation-delay: 0.4s; }
+        h2 { animation-delay: 0.6s; }
+        p:nth-of-type(1) { animation-delay: 0.8s; }
+        p:nth-of-type(2) { animation-delay: 1s; }
+        #tombolKejutan {
+            background-color: #c2185b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-family: 'Georgia', serif;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            animation: slideUp 0.8s ease-out forwards;
+            animation-delay: 1.2s;
+            opacity: 0;
+        }
+        #tombolKejutan:hover {
+            background-color: #ad1457;
+        }
+        .hidden {
+            display: none;
+        }
+        #pesanKejutan {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fef4f7;
+            border-left: 5px solid #c2185b;
+            border-radius: 5px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>Untuk Seseorang yang Paling Berharga</h1>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Untuk Sintiya, Seseorang yang Berharga</h1>
+        </header>
 
-    <main>
-        <img src="foto1.jpg" alt="Foto Kenangan Pertama">
-        
-        <h2>Hai Tya,</h2>
-        
-        <p>
-            Aku membuat halaman ini khusus untukmu. Aku cuma mau bilang terima kasih banyak untuk semuanya. 
-            Terima kasih sudah hadir, terima kasih untuk setiap tawa, dukungan, dan semua kenangan indah yang sudah kita lalui.
-        </p>
-        <p>
-            Kamu adalah orang yang luar biasa, dan aku sangat bersyukur memilikimu dalam hidupku.
+        <main>
+            <img src="foto1.jpg" alt="Foto Kenangan Indah">
+            
+            <h2>Hai Tya,</h2>
+            
+            <p>
+                Aku membuat halaman ini khusus untukmu. Aku cuma mau bilang terima kasih banyak untuk semuanya. 
+                Terima kasih sudah hadir, terima kasih untuk setiap tawa, dukungan, dan semua kenangan indah yang sudah kita lalui.
+            </p>
+            <p>
+                Kamu adalah orang yang luar biasa, dan aku sangat bersyukur dapat mengenalmu dalam hidupku.
             </p>
 
-    </main>
+            <button id="tombolKejutan">Ada pesan lagi buat kamu, Tya...</button>
 
-    <footer>
-        <p>Dengan tulus,<br>Chandra</p>
-    </footer>
+            <div id="pesanKejutan" class="hidden">
+                <p>
+                    <strong>Pesan Tambahan:</strong> Sejujurnya, kata 'terima kasih' saja tidak cukup. 
+                    Semoga hari-harimu selalu secerah senyummu. Kamu sangat berarti.
+                    </p>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>Dengan tulus,<br>[Nama Kamu]</p>
+        </footer>
+    </div>
+
+    <script>
+        const tombol = document.getElementById('tombolKejutan');
+        const pesan = document.getElementById('pesanKejutan');
+
+        tombol.addEventListener('click', function() {
+            pesan.classList.remove('hidden');
+            tombol.style.display = 'none';
+            pesan.style.animation = 'slideUp 0.8s ease-out forwards';
+        });
+    </script>
 
 </body>
 </html>
