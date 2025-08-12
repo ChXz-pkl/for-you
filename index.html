@@ -1,211 +1,267 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sebuah Cerita untuk Tya</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebuah Cerita untuk Tya</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-color: #121212; /* Hitam pekat */
-            --text-color: #e0e0e0;
-            --primary-color: #d4af37; /* Emas yang lebih kalem */
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Poppins', sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-        }
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .story-container {
-            position: relative;
-            z-index: 2;
-        }
-        .story-section {
-            min-height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .intro-title {
-            font-family: var(--font-heading);
-            font-size: clamp(3rem, 12vw, 6rem);
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-        .intro-subtitle {
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.8;
-        }
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.8rem;
-            opacity: 0.7;
-            letter-spacing: 1px;
-        }
-        .profile-pic {
-            width: clamp(180px, 40vw, 250px);
-            height: clamp(180px, 40vw, 250px);
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary-color);
-            margin-bottom: 30px;
-        }
-        .story-text {
-            font-size: clamp(1.1rem, 4vw, 1.5rem);
-            max-width: 600px;
-            line-height: 1.7;
-            font-weight: 300;
-        }
-        .story-text strong {
-            color: var(--primary-color);
-            font-weight: 400;
-        }
-        .inspiration-text {
-            font-family: var(--font-heading);
-            font-style: italic;
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            max-width: 800px;
-            line-height: 1.4;
-            color: var(--primary-color);
-        }
-        .outro-text {
-            font-size: clamp(1.2rem, 5vw, 2rem);
-            max-width: 700px;
-        }
-        .outro-text em {
-            font-style: normal;
-            color: var(--primary-color);
-        }
-        .final-signature {
-            margin-top: 50px;
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px); /* Dimulai dari posisi sedikit di bawah */
-        }
-    </style>
+<style>
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #f5f5f5;
+    --gold-light: #f5d97e;
+    --gold-dark: #d4af37;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+}
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.story-container {
+    position: relative;
+    z-index: 2;
+}
+.story-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+.intro-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 12vw, 6rem);
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+}
+.intro-subtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-weight: 300;
+    opacity: 0.8;
+    letter-spacing: 3px;
+    margin-top: 10px;
+}
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+    opacity: 0.8;
+}
+@keyframes pulse {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+}
+.profile-pic {
+    width: clamp(180px, 40vw, 250px);
+    height: clamp(180px, 40vw, 250px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--gold-dark);
+    box-shadow: 0 0 20px rgba(212,175,55,0.5);
+    margin-bottom: 30px;
+}
+.story-text {
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    max-width: 650px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+.story-text strong {
+    color: var(--gold-dark);
+    font-weight: 400;
+}
+.inspiration-text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    max-width: 800px;
+    line-height: 1.4;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.outro-text {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    max-width: 700px;
+}
+.outro-text em {
+    color: var(--gold-dark);
+}
+.final-signature {
+    margin-top: 50px;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+.reveal {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(50px);
+}
+</style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
+<canvas id="particle-canvas"></canvas>
 
-    <div class="story-container">
-        <section class="story-section" id="intro">
-            <div>
-                <h1 class="intro-title">Sintiya</h1>
-                <h2 class="intro-subtitle">Sebuah Pesan Singkat</h2>
-            </div>
-            <div class="scroll-indicator">Scroll untuk memulai</div>
-        </section>
-        <section class="story-section" id="thankyou">
-            <div class="reveal">
-                <img src="foto1.jpg" alt="Foto Sintiya" class="profile-pic">
-                <p class="story-text">
-                    Hai Tya, aku membuat ini karena ada sesuatu yang ingin kusampaikan...
-                    <br><br>
-                    Terima kasih untuk semua obrolan, tawa, dan dukungan yang mungkin tidak kamu sadari sudah kamu berikan.
-                </p>
-            </div>
-        </section>
-        <section class="story-section" id="inspiration">
-            <div class="reveal">
-                <p class="inspiration-text">
-                    "Caramu melihat dunia dan menghadapi segalanya dengan positif... itu jujur memberiku banyak inspirasi."
-                </p>
-            </div>
-        </section>
-        <section class="story-section" id="outro">
-            <div class="reveal">
-                 <p class="outro-text">
-                    Dan setelah semua itu, rasa terima kasih ini perlahan berubah menjadi... <em>rasa penasaran.</em>
-                 </p>
-                 <p class="outro-text" style="font-size: 1rem; opacity: 0.8; margin-top: 20px;">
-                    Tapi kita jalani santai saja, ya.
-                 </p>
-                 <p class="final-signature">
-                    Dari temanmu,<br>Chandra
-                 </p>
-            </div>
-        </section>
-    </div>
+<div class="story-container">
+    <section class="story-section" id="intro">
+        <div>
+            <h1 class="intro-title">Sintiya</h1>
+            <h2 class="intro-subtitle">Sebuah Pesan Singkat</h2>
+        </div>
+        <div class="scroll-indicator">Scroll untuk memulai</div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script>
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particlesArray;
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
-            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = 'rgba(212, 175, 55, 0.4)'; ctx.fill(); }
-            update() { if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; } if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; } this.x += this.directionX; this.y += this.directionY; this.draw(); }
-        }
-        function init() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 0.5;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * .4) - .2;
-                let directionY = (Math.random() * .4) - .2;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size));
+    <section class="story-section" id="thankyou">
+        <div class="reveal">
+            <img src="foto1.jpg" alt="Foto Sintiya tersenyum" class="profile-pic">
+            <p class="story-text">
+                Hai Tya, aku membuat ini karena ada sesuatu yang ingin kusampaikan...
+                <br><br>
+                Terima kasih untuk semua obrolan, tawa, dan dukungan yang mungkin tidak kamu sadari sudah kamu berikan.
+            </p>
+        </div>
+    </section>
+
+    <section class="story-section" id="inspiration">
+        <div class="reveal">
+            <p class="inspiration-text">
+                "Caramu melihat dunia dan menghadapi segalanya dengan positif... itu jujur memberiku banyak inspirasi."
+            </p>
+        </div>
+    </section>
+
+    <section class="story-section" id="outro">
+        <div class="reveal">
+            <p class="outro-text">
+                Dan setelah semua itu, rasa terima kasih ini perlahan berubah menjadi... <em>rasa penasaran.</em>
+            </p>
+            <p class="outro-text" style="font-size: 1rem; opacity: 0.8; margin-top: 20px;">
+                Tapi kita jalani santai saja, ya.
+            </p>
+            <p class="final-signature">
+                Dari temanmu,<br>Chandra
+            </p>
+        </div>
+    </section>
+</div>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+// ===== Background Particles with Gradient Gold =====
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+class Particle {
+    constructor(x, y, directionX, directionY, size) {
+        this.x = x;
+        this.y = y;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.size = size;
+    }
+    draw() {
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size*3);
+        gradient.addColorStop(0, 'rgba(245, 217, 126, 0.9)');
+        gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+    }
+    update() {
+        if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+        if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+    }
+}
+
+function init() {
+    particlesArray = [];
+    let numberOfParticles = Math.min((canvas.height * canvas.width) / 9000, 150);
+    for (let i = 0; i < numberOfParticles; i++) {
+        let size = (Math.random() * 2) + 0.5;
+        let x = Math.random() * (innerWidth - size * 2);
+        let y = Math.random() * (innerHeight - size * 2);
+        let directionX = (Math.random() * 0.4) - 0.2;
+        let directionY = (Math.random() * 0.4) - 0.2;
+        particlesArray.push(new Particle(x, y, directionX, directionY, size));
+    }
+}
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+    }
+}
+window.addEventListener('resize', function() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    init();
+});
+init();
+animate();
+
+// ===== Text Animations =====
+gsap.registerPlugin(ScrollTrigger);
+
+// Intro Animation
+gsap.timeline()
+    .from('.intro-title', { duration: 1.2, y: 50, opacity: 0, ease: 'power3.out' })
+    .from('.intro-subtitle', { duration: 1, y: 20, opacity: 0, ease: 'power2.out' }, '-=0.7')
+    .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
+
+// Reveal Sections
+gsap.utils.toArray('.reveal').forEach((el) => {
+    gsap.fromTo(el,
+        { opacity: 0, y: 50, filter: 'blur(10px)' },
+        {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: el,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
             }
         }
-        function animate() { requestAnimationFrame(animate); ctx.clearRect(0,0,innerWidth, innerHeight); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } }
-        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
-        init();
-        animate();
-
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.timeline()
-            .from('.intro-title', { duration: 1, y: 50, opacity: 0, ease: 'power3.out' })
-            .from('.intro-subtitle', { duration: 1, y: 30, opacity: 0, ease: 'power2.out' }, '-=0.7')
-            .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
-
-        const revealElements = gsap.utils.toArray('.reveal');
-        revealElements.forEach((element) => {
-            gsap.fromTo(element, 
-                { opacity: 0, y: 50 },
-                { 
-                    opacity: 1, y: 0,
-                    duration: 1.2,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: element,
-                        start: 'top 80%',
-                        toggleActions: 'play none none none',
-                    }
-                }
-            );
-        });
-    </script>
+    );
+});
+</script>
 </body>
 </html>
