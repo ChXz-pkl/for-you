@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS Reset & Basic Styling */
         :root {
             --bg-color: #121212; /* Hitam pekat */
             --text-color: #e0e0e0;
@@ -18,17 +17,13 @@
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Poppins', sans-serif;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-body);
             overflow-x: hidden;
         }
-
-        /* Canvas untuk partikel di latar belakang */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -37,16 +32,12 @@
             height: 100%;
             z-index: 1;
         }
-        
-        /* Container utama untuk semua section */
         .story-container {
             position: relative;
             z-index: 2;
         }
-
-        /* Styling untuk setiap section/babak cerita */
         .story-section {
-            min-height: 100vh; /* Setiap section setinggi layar */
+            min-height: 100vh;
             width: 100vw;
             display: flex;
             justify-content: center;
@@ -55,13 +46,9 @@
             padding: 40px 20px;
             text-align: center;
         }
-        
-        /* -- Styling spesifik per section -- */
-
-        /* Section 1: Judul Pembuka */
         .intro-title {
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 12vw, 6rem); /* Ukuran font responsif */
+            font-size: clamp(3rem, 12vw, 6rem);
             color: var(--primary-color);
             font-weight: 700;
         }
@@ -78,8 +65,6 @@
             opacity: 0.7;
             letter-spacing: 1px;
         }
-
-        /* Section 2: Foto dan Pesan Awal */
         .profile-pic {
             width: clamp(180px, 40vw, 250px);
             height: clamp(180px, 40vw, 250px);
@@ -98,8 +83,6 @@
             color: var(--primary-color);
             font-weight: 400;
         }
-
-        /* Section 3: Pesan Inspirasi */
         .inspiration-text {
             font-family: var(--font-heading);
             font-style: italic;
@@ -108,8 +91,6 @@
             line-height: 1.4;
             color: var(--primary-color);
         }
-        
-        /* Section 4: Pesan Penasaran & Penutup */
         .outro-text {
             font-size: clamp(1.2rem, 5vw, 2rem);
             max-width: 700px;
@@ -123,13 +104,10 @@
             font-size: 1.2rem;
             opacity: 0.8;
         }
-
-        /* Helper class untuk menyembunyikan elemen sebelum animasi */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(50px); /* Dimulai dari posisi sedikit di bawah */
         }
-
     </style>
 </head>
 <body>
@@ -137,7 +115,6 @@
     <canvas id="particle-canvas"></canvas>
 
     <div class="story-container">
-
         <section class="story-section" id="intro">
             <div>
                 <h1 class="intro-title">Sintiya</h1>
@@ -145,7 +122,6 @@
             </div>
             <div class="scroll-indicator">Scroll untuk memulai</div>
         </section>
-
         <section class="story-section" id="thankyou">
             <div class="reveal">
                 <img src="foto1.jpg" alt="Foto Sintiya" class="profile-pic">
@@ -156,7 +132,6 @@
                 </p>
             </div>
         </section>
-
         <section class="story-section" id="inspiration">
             <div class="reveal">
                 <p class="inspiration-text">
@@ -164,7 +139,6 @@
                 </p>
             </div>
         </section>
-        
         <section class="story-section" id="outro">
             <div class="reveal">
                  <p class="outro-text">
@@ -178,36 +152,20 @@
                  </p>
             </div>
         </section>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
     <script>
-        // -- Kode untuk Latar Belakang Partikel (Sama seperti sebelumnya) --
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         let particlesArray;
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
-                ctx.fill();
-            }
-            update() {
-                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
-                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
-            }
+            constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = 'rgba(212, 175, 55, 0.4)'; ctx.fill(); }
+            update() { if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; } if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; } this.x += this.directionX; this.y += this.directionY; this.draw(); }
         }
         function init() {
             particlesArray = [];
@@ -221,55 +179,33 @@
                 particlesArray.push(new Particle(x, y, directionX, directionY, size));
             }
         }
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0,0,innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
-        }
-        window.addEventListener('resize', function() {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            init();
-        });
+        function animate() { requestAnimationFrame(animate); ctx.clearRect(0,0,innerWidth, innerHeight); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } }
+        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
         init();
         animate();
 
-
-        // -- INI BAGIAN BARU: Animasi dengan GSAP & ScrollTrigger --
         gsap.registerPlugin(ScrollTrigger);
+        gsap.timeline()
+            .from('.intro-title', { duration: 1, y: 50, opacity: 0, ease: 'power3.out' })
+            .from('.intro-subtitle', { duration: 1, y: 30, opacity: 0, ease: 'power2.out' }, '-=0.7')
+            .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
 
-        // 1. Animasi pembuka
-        const introTimeline = gsap.timeline();
-        introTimeline.from('.intro-title', { duration: 1, y: 50, opacity: 0, ease: 'power3.out' })
-                     .from('.intro-subtitle', { duration: 1, y: 30, opacity: 0, ease: 'power2.out' }, '-=0.7')
-                     .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
-
-        // 2. Animasi untuk setiap section saat di-scroll
-        const sections = document.querySelectorAll('.story-section');
-        
-        sections.forEach((section, index) => {
-            // Kita lewati section pertama karena sudah dianimasikan
-            if (index === 0) return;
-
-            // Ambil konten di dalam section yang akan dianimasikan
-            const revealContent = section.querySelector('.reveal');
-            
-            gsap.from(revealContent.children, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 70%', // Animasi mulai saat 70% bagian atas section terlihat
-                    end: 'bottom 80%',
-                    toggleActions: 'play none none none' // Mainkan sekali saat masuk
-                },
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                stagger: 0.3, // Beri jeda antar animasi elemen di dalam section
-                ease: 'power3.out'
-            });
+        const revealElements = gsap.utils.toArray('.reveal');
+        revealElements.forEach((element) => {
+            gsap.fromTo(element, 
+                { opacity: 0, y: 50 },
+                { 
+                    opacity: 1, y: 0,
+                    duration: 1.2,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none',
+                    }
+                }
+            );
         });
-
     </script>
 </body>
 </html>
-
