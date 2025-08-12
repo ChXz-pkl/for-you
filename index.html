@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Tya, Dari Chandra</title>
+    <title>Sebuah Cerita untuk Tya</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* -- CSS Overhaul untuk Tampilan Mewah -- */
+        /* CSS Reset & Basic Styling */
         :root {
-            --bg-color: #1a1a2e; /* Biru dongker gelap */
-            --text-color: #e0e0e0; /* Putih keabuan */
-            --primary-color: #f1c40f; /* Emas sebagai aksen */
-            --container-bg: rgba(26, 26, 46, 0.85); /* Latar container semi-transparan */
+            --bg-color: #121212; /* Hitam pekat */
+            --text-color: #e0e0e0;
+            --primary-color: #d4af37; /* Emas yang lebih kalem */
             --font-heading: 'Playfair Display', serif;
-            --font-body: 'Lato', sans-serif;
+            --font-body: 'Poppins', sans-serif;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-body);
-            text-align: center;
-            margin: 0;
-            padding: 40px 20px;
-            overflow-x: hidden; /* Mencegah scroll horizontal */
+            overflow-x: hidden;
         }
 
         /* Canvas untuk partikel di latar belakang */
@@ -37,196 +35,185 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Posisikan di paling belakang */
+            z-index: 1;
+        }
+        
+        /* Container utama untuk semua section */
+        .story-container {
+            position: relative;
+            z-index: 2;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: var(--container-bg);
-            padding: 40px;
-            border-radius: 10px;
-            border: 1px solid rgba(241, 196, 15, 0.2); /* Border emas transparan */
-            backdrop-filter: blur(5px); /* Efek blur pada background di belakang container */
-            animation: fadeIn 1.5s ease-out;
+        /* Styling untuk setiap section/babak cerita */
+        .story-section {
+            min-height: 100vh; /* Setiap section setinggi layar */
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 40px 20px;
+            text-align: center;
         }
+        
+        /* -- Styling spesifik per section -- */
 
-        h1 {
+        /* Section 1: Judul Pembuka */
+        .intro-title {
             font-family: var(--font-heading);
+            font-size: clamp(3rem, 12vw, 6rem); /* Ukuran font responsif */
             color: var(--primary-color);
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .intro-subtitle {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.8rem;
+            opacity: 0.7;
             letter-spacing: 1px;
         }
 
-        h2 {
-            font-family: var(--font-heading);
-            color: var(--text-color);
-            font-size: 1.5em;
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
-
-        img {
-            max-width: 250px; /* Buat foto profil jadi lingkaran */
-            height: 250px;
-            border-radius: 50%; /* Ini yang membuatnya jadi lingkaran */
-            object-fit: cover; /* Memastikan gambar tidak gepeng */
+        /* Section 2: Foto dan Pesan Awal */
+        .profile-pic {
+            width: clamp(180px, 40vw, 250px);
+            height: clamp(180px, 40vw, 250px);
+            border-radius: 50%;
+            object-fit: cover;
             border: 4px solid var(--primary-color);
             margin-bottom: 30px;
-            transition: transform 0.4s ease; /* Transisi untuk hover */
         }
-
-        img:hover {
-            transform: scale(1.05); /* Sedikit membesar saat disentuh mouse */
-        }
-
-        p {
-            font-size: 1.1em;
-            line-height: 1.7;
+        .story-text {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
             max-width: 600px;
-            margin: 20px auto;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .story-text strong {
+            color: var(--primary-color);
+            font-weight: 400;
         }
 
-        footer p {
-            font-size: 1em;
-            color: var(--text-color);
-            opacity: 0.7;
-            margin-top: 50px;
-        }
-
-        #tombolKejutan {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            font-family: var(--font-body);
-            font-weight: 700;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1em;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-
-        #tombolKejutan:hover {
-            background-color: #ffffff;
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-        }
-
-        .hidden { display: none; }
-
-        #pesanKejutan {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: rgba(0,0,0,0.2);
-            border-left: 4px solid var(--primary-color);
-            border-radius: 5px;
-            text-align: left;
-        }
-        
-        strong {
+        /* Section 3: Pesan Inspirasi */
+        .inspiration-text {
+            font-family: var(--font-heading);
+            font-style: italic;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            max-width: 800px;
+            line-height: 1.4;
             color: var(--primary-color);
         }
-
-        /* Animasi fade in */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        /* Section 4: Pesan Penasaran & Penutup */
+        .outro-text {
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            max-width: 700px;
         }
+        .outro-text em {
+            font-style: normal;
+            color: var(--primary-color);
+        }
+        .final-signature {
+            margin-top: 50px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* Helper class untuk menyembunyikan elemen sebelum animasi */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
     </style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
 
-    <div class="container">
-        <header>
-            <h1>Sintiya</h1>
-            <h2>Sebuah Ucapan Terima Kasih</h2>
-        </header>
+    <div class="story-container">
 
-        <main>
-            <img src="foto1.jpg" alt="Foto Sintiya">
-            
-            <p>
-                Hai Tya, mungkin ini agak acak, tapi aku cuma ingin meluangkan waktu sejenak untuk bilang terima kasih.
-                Aku sangat menghargai kehadiranmu sebagai teman. Caramu melihat dunia dan energi positifmu itu... keren banget.
-            </p>
-            <p>
-                Terima kasih untuk semua obrolan, tawa, dan dukungan yang mungkin tidak kamu sadari sudah kamu berikan.
-            </p>
+        <section class="story-section" id="intro">
+            <div>
+                <h1 class="intro-title">Sintiya</h1>
+                <h2 class="intro-subtitle">Sebuah Pesan Singkat</h2>
+            </div>
+            <div class="scroll-indicator">Scroll untuk memulai</div>
+        </section>
 
-            <button id="tombolKejutan">Satu hal lagi...</button>
-
-            <div id="pesanKejutan" class="hidden">
-                <p>
-                    <strong>Sedikit catatan:</strong> Melihat caramu menghadapi berbagai hal dengan positif itu jujur memberiku banyak inspirasi. 
-                    Dunia butuh lebih banyak orang sepertimu. Teruslah bersinar, ya!
+        <section class="story-section" id="thankyou">
+            <div class="reveal">
+                <img src="foto1.jpg" alt="Foto Sintiya" class="profile-pic">
+                <p class="story-text">
+                    Hai Tya, aku membuat ini karena ada sesuatu yang ingin kusampaikan...
+                    <br><br>
+                    Terima kasih untuk semua obrolan, tawa, dan dukungan yang mungkin tidak kamu sadari sudah kamu berikan.
                 </p>
             </div>
-        </main>
+        </section>
 
-        <footer>
-            <p>Dari temanmu,<br>Chandra</p>
-        </footer>
+        <section class="story-section" id="inspiration">
+            <div class="reveal">
+                <p class="inspiration-text">
+                    "Caramu melihat dunia dan menghadapi segalanya dengan positif... itu jujur memberiku banyak inspirasi."
+                </p>
+            </div>
+        </section>
+        
+        <section class="story-section" id="outro">
+            <div class="reveal">
+                 <p class="outro-text">
+                    Dan setelah semua itu, rasa terima kasih ini perlahan berubah menjadi... <em>rasa penasaran.</em>
+                 </p>
+                 <p class="outro-text" style="font-size: 1rem; opacity: 0.8; margin-top: 20px;">
+                    Tapi kita jalani santai saja, ya.
+                 </p>
+                 <p class="final-signature">
+                    Dari temanmu,<br>Chandra
+                 </p>
+            </div>
+        </section>
+
     </div>
 
-    <script>
-        // -- Kode untuk Tombol Kejutan --
-        const tombol = document.getElementById('tombolKejutan');
-        const pesan = document.getElementById('pesanKejutan');
-        tombol.addEventListener('click', function() {
-            pesan.classList.remove('hidden');
-            tombol.style.display = 'none';
-            pesan.style.animation = 'fadeIn 1s ease-out';
-        });
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-        // -- Kode untuk Latar Belakang Partikel --
+    <script>
+        // -- Kode untuk Latar Belakang Partikel (Sama seperti sebelumnya) --
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         let particlesArray;
-
-        // Properti Partikel
         class Particle {
             constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
             }
-            // Menggambar partikel individu
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = 'rgba(241, 196, 15, 0.5)';
+                ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
                 ctx.fill();
             }
-            // Memperbarui posisi partikel
             update() {
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
+                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
+                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
                 this.x += this.directionX;
                 this.y += this.directionY;
                 this.draw();
             }
         }
-
-        // Membuat array partikel
         function init() {
             particlesArray = [];
             let numberOfParticles = (canvas.height * canvas.width) / 9000;
             for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
+                let size = (Math.random() * 2) + 0.5;
                 let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
                 let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
                 let directionX = (Math.random() * .4) - .2;
@@ -234,27 +221,55 @@
                 particlesArray.push(new Particle(x, y, directionX, directionY, size));
             }
         }
-
-        // Loop animasi
         function animate() {
             requestAnimationFrame(animate);
             ctx.clearRect(0,0,innerWidth, innerHeight);
-
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
+            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
         }
-
-        // Agar responsif saat ukuran window berubah
         window.addEventListener('resize', function() {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
             init();
         });
-
         init();
         animate();
-    </script>
 
+
+        // -- INI BAGIAN BARU: Animasi dengan GSAP & ScrollTrigger --
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Animasi pembuka
+        const introTimeline = gsap.timeline();
+        introTimeline.from('.intro-title', { duration: 1, y: 50, opacity: 0, ease: 'power3.out' })
+                     .from('.intro-subtitle', { duration: 1, y: 30, opacity: 0, ease: 'power2.out' }, '-=0.7')
+                     .from('.scroll-indicator', { duration: 1, opacity: 0, y: 20 }, '-=0.5');
+
+        // 2. Animasi untuk setiap section saat di-scroll
+        const sections = document.querySelectorAll('.story-section');
+        
+        sections.forEach((section, index) => {
+            // Kita lewati section pertama karena sudah dianimasikan
+            if (index === 0) return;
+
+            // Ambil konten di dalam section yang akan dianimasikan
+            const revealContent = section.querySelector('.reveal');
+            
+            gsap.from(revealContent.children, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 70%', // Animasi mulai saat 70% bagian atas section terlihat
+                    end: 'bottom 80%',
+                    toggleActions: 'play none none none' // Mainkan sekali saat masuk
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                stagger: 0.3, // Beri jeda antar animasi elemen di dalam section
+                ease: 'power3.out'
+            });
+        });
+
+    </script>
 </body>
 </html>
+
